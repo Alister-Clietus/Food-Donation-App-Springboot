@@ -13,8 +13,10 @@ import com.fooddonation.app.dto.DonorDTO;
 import com.fooddonation.app.dto.LoginDTO;
 import com.fooddonation.app.dto.RegistrationDTO;
 import com.fooddonation.app.dto.ServiceResponse;
+import com.fooddonation.app.dto.VolunteerDTO;
 import com.fooddonation.app.entity.DonorEntity;
 import com.fooddonation.app.entity.RegistrationEntity;
+import com.fooddonation.app.entity.VolunteerEntity;
 import com.fooddonation.app.repository.DonarRepo;
 import com.fooddonation.app.repository.RegistrationRepo;
 import com.fooddonation.app.repository.VolunteerRepo;
@@ -316,6 +318,66 @@ public class FoodDonationServiceImp implements FoodDonationService
 	        return new ServiceResponse(Constants.MESSAGE_STATUS.FAILED, e.getMessage(),null);
 	    }
 	}
+
+	public ServiceResponse volunteerDetils(VolunteerDTO volunteerDTO) {
+	    try {
+	        VolunteerEntity entity = new VolunteerEntity();
+	        entity.setEmail(volunteerDTO.getEmail());
+	        entity.setFoodId(volunteerDTO.getFoodId());
+	        entity.setAddress(volunteerDTO.getLocation());
+
+	        VolunteerEntity saved = volunteerrepo.save(entity);
+	        System.out.println("Entered");
+	        return new ServiceResponse(Constants.MESSAGE_STATUS.SUCCESS, "Volunteer details saved successfully", null);
+	    } catch (Exception e) 
+	    {
+	    	System.out.println("Exception");
+	        return new ServiceResponse(Constants.MESSAGE_STATUS.FAILED, "Failed to save volunteer details", null);
+	    }
+	}
+	
+	public ServiceResponse getLocations() {
+	    try {
+	        List<VolunteerEntity> locationList = volunteerrepo.findAll();
+
+	        if (locationList.isEmpty()) {
+	            return new ServiceResponse(
+	                Constants.MESSAGE_STATUS.SUCCESS,
+	                "No locations found.",
+	                null
+	            );
+	        }
+
+	        JSONArray aaDataArray = new JSONArray();
+
+	        for (VolunteerEntity location : locationList) {
+	            JSONObject obj = new JSONObject();
+	            obj.put("id", location.getId());
+	            obj.put("email", location.getEmail());
+	            obj.put("foodId", location.getFoodId());
+	            obj.put("address", location.getAddress());
+
+	            aaDataArray.add(obj);
+	        }
+
+	        JSONObject responseMap = new JSONObject();
+	        responseMap.put("aaData", aaDataArray);
+	        return new ServiceResponse(
+	            Constants.MESSAGE_STATUS.SUCCESS,
+	            null,
+	            responseMap
+	        );
+
+	    } catch (Exception e) {
+	        return new ServiceResponse(
+	            Constants.MESSAGE_STATUS.FAILED,
+	            e.getMessage(),
+	            null
+	        );
+	    }
+	}
+
+
 
 
 

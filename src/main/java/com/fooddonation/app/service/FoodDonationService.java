@@ -5,6 +5,7 @@ import com.fooddonation.app.dto.DonorDTO;
 import com.fooddonation.app.dto.LoginDTO;
 import com.fooddonation.app.dto.RegistrationDTO;
 import com.fooddonation.app.dto.ServiceResponse;
+import com.fooddonation.app.dto.VolunteerDTO;
 
 
 public interface FoodDonationService 
@@ -19,6 +20,8 @@ public interface FoodDonationService
 
 	public ServiceResponse getAllUsers();
 	
+	public ServiceResponse getLocations();
+	
 	public ServiceResponse updateUserStatus(String email);
 	
 	public ServiceResponse deleteUserByEmail(String email);
@@ -26,5 +29,7 @@ public interface FoodDonationService
 	public ServiceResponse updateDonationStatus(Long foodId);
 	
 	public ServiceResponse deleteDonation(Long foodId);
+	
+	public ServiceResponse volunteerDetils(VolunteerDTO volunteerDTO);
 
 }

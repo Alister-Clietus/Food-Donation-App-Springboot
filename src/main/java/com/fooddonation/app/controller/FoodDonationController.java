@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fooddonation.app.dto.DonorDTO;
 import com.fooddonation.app.dto.LoginDTO;
 import com.fooddonation.app.dto.RegistrationDTO;
+import com.fooddonation.app.dto.VolunteerDTO;
 import com.fooddonation.app.service.FoodDonationService;
 
 import jakarta.validation.Valid;
@@ -74,6 +75,18 @@ public class FoodDonationController
     @DeleteMapping("/deleteDonation/{foodId}")
     public ResponseEntity<?> deleteDonation(@PathVariable Long foodId) {
         return new ResponseEntity<>(service.deleteDonation(foodId), HttpStatus.OK);
+    }
+    
+    @PostMapping("/volunteerdetails")
+    public ResponseEntity<?> volunteerDetils(@Valid @RequestBody VolunteerDTO volunteerDTO) 
+    {
+    	System.out.println("Entered the Vlunteerdetails");
+        return new ResponseEntity<>(service.volunteerDetils(volunteerDTO), HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/volunteer/locations")
+    public ResponseEntity<?> getLocations() {
+        return new ResponseEntity<>(service.getLocations(), HttpStatus.OK);
     }
 
 }

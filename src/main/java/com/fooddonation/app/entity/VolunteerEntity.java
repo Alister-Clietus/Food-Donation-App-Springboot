@@ -23,6 +23,19 @@ public class VolunteerEntity
     @Column(name = "food_id")
     private Long foodId;
     
+    @Column(name = "address")
+    private String address;
+    
+    
+    
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public Long getId() {
 		return id;
